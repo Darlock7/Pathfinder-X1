@@ -1,0 +1,55 @@
+# Claude local settings (machine-specific)
+.claude/settings.local.json
+.claude/worktrees/
+
+# IDE
+.vscode/
+
+# MATLAB temp / generated
+*.asv
+*.m~
+*.autosave
+*.mlx.autosave
+*.mex*
+*.p
+*.slxc
+
+# macOS
+.DS_Store
+
+# Generated outputs
+results/
+output/
+outputs/
+figures/
+
+# XFOIL generated files
+xfoil_input_*.inp
+xfoil_polar_*.txt
+*.bl
+
+# AVL generated files (regenerated every run)
+AVL/*.avl
+AVL/*.mass
+AVL/*.run
+AVL/*_cmd.txt
+AVL/*_st.txt
+
+# External tool installers (keep runtime executables only)
+external/**/*.zip
+external/**/*.dmg
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Flight logs (large; keep curated ones under docs/ if needed)
+logs/
+*.ulg
+*.bin
+*.tlog
+
+# Raw data
+data/raw/
