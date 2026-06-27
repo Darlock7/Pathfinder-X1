@@ -53,3 +53,8 @@ logs/
 
 # Raw data
 data/raw/
+
+# Large third-party reference databases (regenerable; download locally — see resources/README.md)
+resources/propeller_surrogate_model/UIUC-propDB/
+resources/propeller_surrogate_model/propeller_performance_data_files/
+resources/airfoil_surrogate_model/airfoil_shape_data_files/
