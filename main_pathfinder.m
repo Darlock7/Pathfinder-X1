@@ -18,7 +18,7 @@
 %   v1.0  CMA-ES optimization over geometry + propulsion for max endurance @ <249 g
 
 clc; clear; close all;
-run_project;   % path setup
+run_project;   % path setup % This is better than doing it the manual way!
 
 %% ------------------------------------------------------------------
 % USER INPUTS  (edit these)
