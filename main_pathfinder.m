@@ -1,5 +1,5 @@
-% main_pathfinder.m
-% Pathfinder X1 — top-level sizing / analysis driver.
+﻿% main_pathfinder.m
+% Pathfinder X1 â€” top-level sizing / analysis driver.
 % Sub-250 g thrust-vectored flying wing. SI units throughout.
 %
 % Run run_project.m first (adds all src/ paths), or run this after it.
@@ -41,27 +41,40 @@ Tip_Twist_Geo = -3;
 rootAirfoil = "e222.dat";
 tipAirfoil = "e230.dat";
 
+% Engineering Assumptions (energy sizing â€” update as modules converge):
+ac.W_N        = cfg.massBudget_g * 1e-3 * g;   % [N]   worst-case gross weight
+ac.LD         = 8.0;                            % [-]   cruise L/D (flying wing, AR 4.5)
+ac.eta_p      = 0.60;                           % [-]   cruise propulsive efficiency
+ac.D_prop_m   = 0.127;                          % [m]   5-inch prop diameter (0.127 m)
+ac.n_rotors   = 2;                              % [-]   twin pusher bicopter
+ac.FM         = 0.55;                           % [-]   rotor figure of merit (small props ~0.55)
+ac.eta_elec   = 0.85;                           % [-]   motor + ESC efficiency
+ac.eta_hover  = ac.FM * ac.eta_elec;            % [-]   combined hover efficiency
+ac.rho_kgm3   = roh;                            % [kg/m^3]  matches worst-case density above
+ac.e_bat_Whkg = 150;                            % [Wh/kg]   2S LiPo specific energy
+ac.m_bat_kg   = 0.055;                          % [kg]  battery mass (from weightBudget.m)
 
 %% --------------------------------------------------------- 
 %                     Mission Profiles
 %       ---------------------------------------------
 
-% [A] FPV mode:
+% [A] FPV mode: hand launch -> cruise (no hover phases)
+mission_fpv.mode           = 'fpv';
+mission_fpv.t_hover_to_s   = 0;          % hand-thrown -- no hover takeoff [s]
+mission_fpv.t_hover_ld_s   = 0;          % belly-land or catch -- no hover [s]
+mission_fpv.R_cruise_m     = 500;        % sizing range (radius from pilot) [m]
+mission_fpv.reserve_factor = 1.2;        % 20% energy reserve [-]
 
-
-
-
-
-
-
-
-
-% [B] Camera Drone Mode: 
-
-
+% [B] Camera drone mode: hover takeoff -> 1 mi round trip -> hover land
+%     1 mile = 1609.34 m one-way; total cruise distance = 3218.69 m
+mission_cam.mode           = 'camera';
+mission_cam.t_hover_to_s   = 30;         % hover takeoff [s]
+mission_cam.t_hover_ld_s   = 30;         % hover precision landing [s]
+mission_cam.R_cruise_m     = 1609.34;    % 1 mile one-way [m]
+mission_cam.reserve_factor = 1.3;        % 30% reserve (GPS/transition risk) [-]
 
 %% ------------------------------------------------------------------
-% 1) MASS BUDGET  (binding constraint — check first)   [NEW]
+% 1) MASS BUDGET  (binding constraint â€” check first)   [NEW]
 %% ------------------------------------------------------------------
 % mass = weightBudget();   % TODO: returns struct, errors/warns if > cfg.massBudget_g
 
@@ -74,7 +87,7 @@ tipAirfoil = "e230.dat";
 % TODO: wire ported modules with Pathfinder geometry/props.
 
 %% ------------------------------------------------------------------
-% 6) CONTROL ALLOCATION — thrust vectoring, no control surfaces  [NEW]
+% 6) CONTROL ALLOCATION â€” thrust vectoring, no control surfaces  [NEW]
 %% ------------------------------------------------------------------
 % For each regime, verify the twin (throttle, tilt) actuators can produce
 % the moments needed for trim + control. Hover is the long-pole risk.
@@ -83,6 +96,7 @@ tipAirfoil = "e230.dat";
 %% ------------------------------------------------------------------
 % 7) MISSION + ENERGY -> ENDURANCE OBJECTIVE
 %% ------------------------------------------------------------------
-% TODO: three-regime mission profile; endurance from energy model.
+energy_fpv = hoverCruiseEnergy(ac, mission_fpv);   % FPV: size for 500 m radius cruise
+energy_cam = hoverCruiseEnergy(ac, mission_cam);   % camera: 1 mi round trip + hover
 
 disp('Pathfinder driver scaffold loaded. Fill in module calls as they come online.');
