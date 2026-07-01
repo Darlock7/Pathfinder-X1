@@ -95,15 +95,15 @@ mult_low     = 1.55;   % [1.3 – 1.8]
 %  Phase          | dt [min]| dt [s] | Regime     | h_0 [m] | h_f [m]
 %  Hand launch    |    3    |   180  | STOL       |    0    |   20
 %  Wait/command   |    5    |   300  | Low-speed  |   20    |   20
-%  FPV cruise     |   30    |  1800  | Cruise     |   20    |   20
-%  Hand recovery  |    8    |   480  | STOL       |   20    |    0
-%  TOTAL          |   46    |  2760  |            |         |
+%  FPV cruise     |   20    |  1200  | Cruise     |   20    |   20
+%  Hand recovery  |    4    |   240  | STOL       |   20    |    0
+%  TOTAL          |   32    |  1920  |            |         |
 
 t0_A = 0;
 t1_A = t0_A + 180;    % end STOL launch       [s]
 t2_A = t1_A + 300;    % end low-speed wait    [s]
-t3_A = t2_A + 1800;   % end FPV cruise        [s]
-t4_A = t3_A + 480;    % end STOL recovery     [s]
+t3_A = t2_A + 1200;   % end FPV cruise        [s]
+t4_A = t3_A + 240;    % end STOL recovery     [s]
 
 t_bp_A = [t0_A, t1_A, t2_A, t3_A, t4_A];
 h_bp_A = [0,    20,    20,   20,   0  ];      % altitude [m] at each event
@@ -122,18 +122,18 @@ mission_fpv.reserve_factor = 1.2;
 %  Hand launch     |    3    |   180  | STOL       |    0    |   20
 %  Wait/command    |    5    |   300  | Low-speed  |   20    |   20
 %  Move to target  |    5    |   300  | Low-speed  |   20    |   10
-%  Static record   |   10    |   600  | Hover      |   10    |   30
+%  Static record   |    5    |   300  | Hover      |   10    |   30
 %  Return to pilot |    2    |   120  | Cruise     |   30    |   20
-%  Hand recovery   |    5    |   300  | STOL       |   20    |    0
-%  TOTAL           |   30    |  1800  |            |         |
+%  Hand recovery   |    4    |   240  | STOL       |   20    |    0
+%  TOTAL           |   24    |  1440  |            |         |
 
 t0_B = 0;
 t1_B = t0_B + 180;    % end STOL launch           [s]
 t2_B = t1_B + 300;    % end low-speed wait         [s]
 t3_B = t2_B + 300;    % end low-speed move         [s]
-t4_B = t3_B + 600;    % end hover / static record  [s]
+t4_B = t3_B + 300;    % end hover / static record  [s]
 t5_B = t4_B + 120;    % end cruise return          [s]
-t6_B = t5_B + 300;    % end STOL recovery          [s]
+t6_B = t5_B + 240;    % end STOL recovery          [s]
 
 t_bp_B = [t0_B, t1_B, t2_B, t3_B, t4_B, t5_B, t6_B];
 h_bp_B = [0,    20,   20,   10,   30,   20,   0  ];   % altitude [m]
@@ -287,7 +287,7 @@ fprintf(' Non-bat components:   %6.1f g\n', m_non_bat_kg*1e3);
 fprintf(' Current battery:      %6.1f g  f_bat = %.3f\n', ac.m_bat_kg*1e3, f_bat_cur);
 fprintf(' Battery spec. energy: %6.0f Wh/kg\n', ac.e_bat_Whkg);
 fprintf(' Available energy:     %6.3f Wh\n', E_avail_Wh);
-fprintf('\n Mission A (FPV, 46 min):\n');
+fprintf('\n Mission A (FPV, 32 min):\n');
 fprintf('   E_design:           %6.3f Wh\n',  E_design_A);
 fprintf('   Bat. mass req:      %6.1f g   f_bat = %.3f\n', m_bat_req_A*1e3, f_bat_req_A);
 fprintf('   AUW w/ req bat:     %6.1f g   (limit = 249 g)\n', AUW_req_A);
@@ -297,7 +297,7 @@ else
     fprintf('   => OVER LIMIT by %.1f g — reduce mission or battery spec energy too low.\n', ...
             AUW_req_A - cfg.massBudget_g);
 end
-fprintf('\n Mission B (Camera, 30 min):\n');
+fprintf('\n Mission B (Camera, 24 min):\n');
 fprintf('   E_design:           %6.3f Wh\n',  E_design_B);
 fprintf('   Bat. mass req:      %6.1f g   f_bat = %.3f\n', m_bat_req_B*1e3, f_bat_req_B);
 fprintf('   AUW w/ req bat:     %6.1f g   (limit = 249 g)\n', AUW_req_B);
