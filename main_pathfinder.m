@@ -120,18 +120,18 @@ mission_fpv.reserve_factor = 1.2;
 % ==========================================
 %  Phase           | dt [min]| dt [s] | Regime     | h_0 [m] | h_f [m]
 %  Hand launch     |    3    |   180  | STOL       |    0    |   20
-%  Wait/command    |    5    |   300  | Low-speed  |   20    |   20
+%  Wait/command    |    2    |   120  | Low-speed  |   20    |   20
 %  Move to target  |    5    |   300  | Low-speed  |   20    |   10
-%  Static record   |    5    |   300  | Hover      |   10    |   30
+%  Static record   |    2    |   120  | Hover      |   10    |   30
 %  Return to pilot |    2    |   120  | Cruise     |   30    |   20
 %  Hand recovery   |    4    |   240  | STOL       |   20    |    0
-%  TOTAL           |   24    |  1440  |            |         |
+%  TOTAL           |   18    |  1080  |            |         |
 
 t0_B = 0;
 t1_B = t0_B + 180;    % end STOL launch           [s]
-t2_B = t1_B + 300;    % end low-speed wait         [s]
+t2_B = t1_B + 120;    % end low-speed wait         [s]
 t3_B = t2_B + 300;    % end low-speed move         [s]
-t4_B = t3_B + 300;    % end hover / static record  [s]
+t4_B = t3_B + 120;    % end hover / static record  [s]
 t5_B = t4_B + 120;    % end cruise return          [s]
 t6_B = t5_B + 240;    % end STOL recovery          [s]
 
@@ -297,7 +297,7 @@ else
     fprintf('   => OVER LIMIT by %.1f g — reduce mission or battery spec energy too low.\n', ...
             AUW_req_A - cfg.massBudget_g);
 end
-fprintf('\n Mission B (Camera, 24 min):\n');
+fprintf('\n Mission B (Camera, 18 min):\n');
 fprintf('   E_design:           %6.3f Wh\n',  E_design_B);
 fprintf('   Bat. mass req:      %6.1f g   f_bat = %.3f\n', m_bat_req_B*1e3, f_bat_req_B);
 fprintf('   AUW w/ req bat:     %6.1f g   (limit = 249 g)\n', AUW_req_B);
