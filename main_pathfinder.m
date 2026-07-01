@@ -22,12 +22,22 @@ run_project;   % path setup % This is better than doing it the manual way!
 
 %% ------------------------------------------------------------------
 % USER INPUTS  (edit these)
-%% ------------------------------------------------------------------
+% ------------------------------------------------------------------
 cfg.massBudget_g   = 249;          % hard all-up mass cap [g]
 cfg.span_m         = 0.75;         % wing span (placeholder) [m]
 cfg.cruiseSpeed_ms = 22;           % target cruise speed [m/s]
 cfg.regimes        = ["cruise","STOL","hover"];
 
+% Given:
+g = 9.81;
+roh = 
+
+% Design Variables:
+AR = 4.5;
+wingTapper = 0.45;
+QuarterChordSweep = 25;
+Dihedral = 3;
+Tip_Twist_Geo = -3;
 %% ------------------------------------------------------------------
 % 1) MASS BUDGET  (binding constraint — check first)   [NEW]
 %% ------------------------------------------------------------------
