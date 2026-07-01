@@ -30,7 +30,7 @@ cfg.regimes        = ["cruise","STOL","hover"];
 
 % Given:
 g = 9.81;
-roh = 
+roh = 0.93; % worst case scenario, high, hot desert flying.
 
 % Design Variables:
 AR = 4.5;
@@ -38,6 +38,28 @@ wingTapper = 0.45;
 QuarterChordSweep = 25;
 Dihedral = 3;
 Tip_Twist_Geo = -3;
+rootAirfoil = "e222.dat";
+tipAirfoil = "e230.dat";
+
+
+%% --------------------------------------------------------- 
+%                     Mission Profiles
+%       ---------------------------------------------
+
+% [A] FPV mode:
+
+
+
+
+
+
+
+
+
+% [B] Camera Drone Mode: 
+
+
+
 %% ------------------------------------------------------------------
 % 1) MASS BUDGET  (binding constraint — check first)   [NEW]
 %% ------------------------------------------------------------------
