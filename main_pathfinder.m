@@ -1,4 +1,4 @@
-﻿% main_pathfinder.m
+% main_pathfinder.m
 % Pathfinder X1 â€” top-level sizing / analysis driver.
 % Sub-250 g thrust-vectored flying wing. SI units throughout.
 %
@@ -32,7 +32,7 @@ cfg.regimes        = ["cruise","STOL","hover"];
 g = 9.81;
 roh = 0.93; % worst case scenario, high, hot desert flying.
 
-% Design Variables:
+% Design Variables: [NOT LOCKED IN AT ALL]
 AR = 4.5;
 wingTapper = 0.45;
 QuarterChordSweep = 25;
